@@ -7,7 +7,6 @@ package Year2022.Feb;
     1. Adding a node
     2. Traversal of tree
     3. Deleting a node
-    4. Adding a node after a particular data
      */
 
 // So firstly we create a Node class. This class will have:-
@@ -21,6 +20,9 @@ Node contains:-
 Now we can create different types of constructors for this node class
 One constructor can be a basic one, second can set the left and right values
  */
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 class Node{
     int data;
@@ -99,6 +101,14 @@ class TraversalOfTrees{
    2. Traverse the left subtree, i.e., call Preorder(left-subtree)
    3. Traverse the right subtree, i.e., call Preorder(right-subtree)
 
+   ----------LEVEL ORDER TRAVERSAL------------
+   1. Print the tree level by level and then move to next level
+   So there are 2 ways to do it, one is just using a function, but the problem with that is
+   the time complexity (  O(n^2)  )
+
+   Other than that, the second method is to use the queue. We have used that approach
+   Time complexity = O(n)
+
    So let's code them one by one
      */
 
@@ -117,6 +127,9 @@ class TraversalOfTrees{
         System.out.println();
         System.out.println("Preorder: ");
         printPreOrder(root);
+        System.out.println();
+        System.out.println("Level Order: ");
+        printLevelOrder(root);
     }
 
     private static void printInorder(Node node){
@@ -154,6 +167,53 @@ class TraversalOfTrees{
         printPreOrder(node.left);
 
         printPreOrder(node.right);
+    }
+
+    private static void printLevelOrder(Node node){
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(node);
+
+        while (!queue.isEmpty()){
+            Node tempNode = queue.poll(); // This actually removes the head and changes to next head
+            System.out.print(tempNode.data + " ");
+
+            if (tempNode.left != null){
+                queue.add(tempNode.left);
+            }
+
+            if (tempNode.right != null){
+                queue.add(tempNode.right);
+            }
+        }
+    }
+
+}
+
+class DeletingOfNodes{
+    /*
+    Now we have seen adding and traversing. Now we have to delete the Node
+
+    For that we have 2 cases
+    The node can be in somewhere middle, or at the leaves
+
+    Case 1:
+    If the node is at the bottom, then we just have to remove it by making the parent node pointer null
+
+    Case 2:
+    If we have some node in the middle, then we can go to the rightmost node of the tree, delete that, and then replace
+    it with node that we have to delete. We will see how to do that
+
+    The deletion part of binary tree is not that hard because we can just directly take any leaf node and then replace
+    it with the target.
+     */
+
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.right.left = new Node(4);
+        root.right.right = new Node(6);
+        root.left.right = new Node(5);
     }
 
 }
